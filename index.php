@@ -1,0 +1,1 @@
+<?php include 'resource/front.php';
