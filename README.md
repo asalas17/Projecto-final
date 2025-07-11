@@ -1,7 +1,7 @@
 # Agronatura 🌱
 
 **Plataforma Web para Ferias del Agricultor en Costa Rica**
-Parte del curso **SC-502 Software Development**, en la Universidad Fidélitas.
+Parte del curso **SC-502**, en la Universidad Fidélitas.
 
 
 ## 👥 Colaboradores
