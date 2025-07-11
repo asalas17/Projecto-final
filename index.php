@@ -1,1 +1,3 @@
-<?php include 'resource/front.php';
+<?php
+header('Location: resource/inicio.php');
+exit;

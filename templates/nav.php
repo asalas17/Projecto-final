@@ -13,27 +13,32 @@ $activePage = $activePage ?? 'inicio';
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <?= ($activePage == 'inicio') ? 'active' : '' ?>"
-                        href="..\resource\inicio.php">Inicio</a>
+                    <a class="nav-link <?= ($activePage == 'inicio') ? 'active' : '' ?>" href="inicio.php">Inicio</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link <?= ($activePage == 'acerca') ? 'active' : '' ?>"
-                        href="..\resource\acerca.php">Acerca de nosotros</a>
+                    <a class="nav-link <?= ($activePage == 'ferias') ? 'active' : '' ?>" href="ferias.php">Próximas
+                        ferias</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link <?= ($activePage == 'ferias') ? 'active' : '' ?>" href="..\resource\ferias.php">Próximas ferias</a>
+                    <a class="nav-link <?= ($activePage == 'inscribirse') ? 'active' : '' ?>"
+                        href="inscribirse.php">Inscribirse</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link <?= ($activePage == 'sedes') ? 'active' : '' ?>" href="..\resource\sedes.php">Sedes oficiales</a>
+                    <a class="nav-link <?= ($activePage == 'sedes') ? 'active' : '' ?>" href="agriOficiales.php">Agricultores
+                        oficiales</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link <?= ($activePage == 'inscribirse') ? 'active' : '' ?>" href="..\resource\inscribirse.php">Inscribirse</a>
+                    <a class="nav-link <?= ($activePage == 'acerca') ? 'active' : '' ?>" href="acerca.php">Acerca de
+                        nosotros</a>
                 </li>
             </ul>
 
             <div class="d-flex pe-2">
-                <a href="..\resource\inicioSesion.php" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
-                <a href="..\resource\registro.php" class="btn btn-primary">Registrarse</a>
+                <a href="inicioSesion.php" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
             </div>
         </div>
     </div>
