@@ -1,0 +1,12 @@
+.agronaturaHeader {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}

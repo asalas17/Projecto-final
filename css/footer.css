@@ -1,0 +1,8 @@
+.link-hover {
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.link-hover:hover {
+    color: #20c997 !important; /* tono verde más claro */
+    text-decoration: underline;
+}

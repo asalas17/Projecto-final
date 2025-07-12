@@ -1,15 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pacifico&display=swap');
 
 
-.navbar {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
+.navbar-agronatura {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #198754;
+  }
 
-.navbar-brand {
-    font-family: "Pacifico", cursive;
-    font-weight: 400;
-    font-style: normal;
-}
+  .navbar-agronatura .nav-link {
+    color: #198754;
+    transition: color 0.3s, text-decoration 0.3s;
+  }
+
+  .navbar-agronatura .nav-link:hover,
+  .navbar-agronatura .nav-link:focus {
+    color: #157347;
+    text-decoration: underline;
+  }
+
+  .navbar-agronatura .nav-link.active {
+    font-weight: 600;
+    color: #157347 !important;
+    text-decoration: underline;
+  }
+
+  .btn-agronatura-outline {
+    border-color: #198754;
+    color: #198754;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .btn-agronatura-outline:hover {
+    background-color: #198754;
+    color: #fff;
+  }
+
+  .navbar-brand-agronatura {
+    font-weight: 700;
+    color: #198754;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .navbar-brand-agronatura i {
+    font-size: 1.5rem;
+  }

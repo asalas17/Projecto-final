@@ -1,0 +1,25 @@
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: #f7fafc;
+  }
+
+  .bg-auth-image {
+    background: url("https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg") center center no-repeat;
+    background-size: cover;
+  }
+
+  .btn-agronatura {
+    background-color: #198754;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-agronatura:hover {
+    background-color: #157347;
+    color: #fff;
+  }
+
+  .link-success-hover:hover {
+    color: #198754 !important;
+    text-decoration: underline;
+  }
