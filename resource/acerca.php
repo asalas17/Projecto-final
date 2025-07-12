@@ -5,7 +5,7 @@ include(__DIR__ . '/../templates/nav.php');
 ?>
 
 <div class="container mt-4">
-<h1>Acerca de Nosotros</h1>
+<h1>Acerca de Nosotros </h1>
         <p>
             Agronatura responde a la necesidad de conectar a agricultores y consumidores mediante una plataforma fácil de usar, que promueve la comercialización local y fortalece las ferias del agricultor. Al facilitar la organización y difusión de eventos, la plataforma contribuye a mejorar las ventas, incentivar el consumo de productos frescos y apoyar el desarrollo sostenible de las comunidades agrícolas locales en Costa Rica.
         </p>
