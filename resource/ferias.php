@@ -53,7 +53,7 @@ include(__DIR__ . '/../templates/nav.php');
       <!-- Tarjeta de feria -->
       <div class="col mb-5">
         <div class="card h-100 shadow border-0">
-          <img class="card-img-top" src="https://scontent.fsyq10-1.fna.fbcdn.net/v/t39.30808-6/308678378_427927272660582_1117839623904657462_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ZQi7DtyDSmoQ7kNvwEptaUi&_nc_oc=AdkotHdH78PqSKvYxn_n1F95LXRvbP8qh4PZcPef1Rl3gb8kCHd58gsrwsQoOZpxGLduYqrUlAzNirjgJp6Anv8N&_nc_zt=23&_nc_ht=scontent.fsyq10-1.fna&_nc_gid=kAiNrIylo0s0TADTjCZnlQ&oh=00_AfREQQV5IutfI9pYS2exlStk5VRRp0Vc9Co_b_TxEHvLPA&oe=68766541" alt="Feria La Fortuna" />
+          <img class="card-img-top" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/66/83/5d/caption.jpg?w=1400&h=1400&s=1&cx=1115&cy=637&chk=v1_01e597ad0b985f2c8e2f" alt="Feria La Fortuna" />
           <div class="card-body text-center">
             <h5 class="fw-bold text-success">Feria La Fortuna</h5>
             <p class="mb-0 text-muted">15 de julio, 2025</p>
