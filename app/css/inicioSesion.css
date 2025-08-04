@@ -1,0 +1,118 @@
+/* =============== Variables =============== */
+:root {
+  --font: "Inter", sans-serif;
+
+  --color-bg-light: #f0f7f4;
+  --color-card-bg: #ffffff;
+  --color-primary: #198754;
+  --color-primary-hover: #157347;
+  --color-secondary: #0d6efd;
+  --color-secondary-light: #d1e7ff;
+  --color-text: #333333;
+
+  --radius-card: 1rem;
+  --radius-btn: 0.75rem;
+
+  --spacing-lg: 2rem;
+  --spacing-md: 1rem;
+
+  --font-size-xl: 2rem;
+  --font-size-lg: 1.25rem;
+  --font-size-md: 1rem;
+  --font-size-sm: 0.875rem;
+
+  --input-height: 3rem;
+  --btn-padding: 0.75rem 1.5rem;
+}
+
+/* =============== Global =============== */
+body {
+  font-family: var(--font);
+  background: linear-gradient(135deg, #eafaf1 0%, var(--color-bg-light) 100%);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
+
+/* para ambas páginas */
+.container-fluid .auth-row {
+
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  max-width: 800px;    /* el ancho que quieras */
+  margin: auto;
+}
+
+
+/* Ajuste de padding en columnas */
+.auth-row .col-lg-6.p-5 {
+  padding: var(--spacing-lg) !important;
+}
+
+/* =============== Headings =============== */
+.text-success {
+  color: var(--color-primary) !important;
+}
+h2.fw-bold {
+  font-size: var(--font-size-xl);
+}
+h4 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+/* =============== Inputs =============== */
+.form-control {
+  height: var(--input-height);
+  font-size: var(--font-size-md);
+  border-radius: var(--radius-btn);
+  border: 1px solid #ced4da;
+}
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem var(--color-secondary-light);
+  border-color: var(--color-secondary);
+}
+
+/* =============== Buttons =============== */
+.btn-agronatura {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: var(--btn-padding);
+  border-radius: var(--radius-btn);
+  font-size: var(--font-size-md);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+.btn-agronatura:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+}
+
+/* =============== Alerts =============== */
+.alert {
+  border-radius: var(--radius-btn);
+  padding: var(--spacing-md);
+  font-size: var(--font-size-md);
+}
+
+/* =============== Links =============== */
+.link-success-hover:hover {
+  color: var(--color-primary) !important;
+  text-decoration: none;
+}
+
+/* =============== Background Image (derecha) =============== */
+.bg-auth-image {
+  background: url("https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg")
+              center center no-repeat;
+  background-size: contain;
+}
+
+/* =============== Small Text =============== */
+small, .small {
+  font-size: var(--font-size-sm);
+}
+
+/* =============== Responsive =============== */
+@media (min-width: 992px) {
+  .container-fluid .auth-row { max-width: 900px; }
+}
