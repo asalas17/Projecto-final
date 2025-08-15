@@ -1,3 +1,7 @@
+<?php
+$gmapsApiKey = getenv('GMAPS_API_KEY');
+?>
+
 <div class="modal fade" id="crearFeriaModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -85,4 +89,6 @@
 </style>
 
 <script src="../app/js/crearFeria.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZwhVRWJo-My9lZCw_s1R5MaLCkR5fAIs&callback=initMap&libraries=places" async defer></script>
+<?php if ($gmapsApiKey): ?>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo htmlspecialchars($gmapsApiKey, ENT_QUOTES); ?>&callback=initMap&libraries=places" async defer></script>
+<?php endif; ?>
