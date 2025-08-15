@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     } elseif ($accion === 'eliminar_producto') {
         $prodId = (int) ($_POST['id_producto'] ?? 0);
-        $stmt = $connection->prepare('DELETE FROM productos WHERE id = ? AND usuario_id = ?');
+        $stmt = $connection->prepare('DELETE FROM productos WHERE id = ? AND agricultor_id = ?');
         $stmt->bind_param('ii', $prodId, $userId);
         $stmt->execute();
         $stmt->close();
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombreProd = $_POST['nombre'] ?? '';
         $descProd = $_POST['descripcion'] ?? '';
         $precioProd = (float) ($_POST['precio'] ?? 0);
-        $stmt = $connection->prepare('UPDATE productos SET nombre = ?, descripcion = ?, precio = ? WHERE id = ? AND usuario_id = ?');
+        $stmt = $connection->prepare('UPDATE productos SET nombre = ?, descripcion = ?, precio = ? WHERE id = ? AND agricultor_id = ?');
         $stmt->bind_param('ssdii', $nombreProd, $descProd, $precioProd, $prodId, $userId);
         $stmt->execute();
         $stmt->close();
@@ -76,7 +76,7 @@ include(__DIR__ . '/../templates/nav.php');
     <div class="card">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <span>Mis productos</span>
-            <a href="crearProducto.php" class="btn btn-light btn-sm">Crear producto</a>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Crear producto</button>
         </div>
         <div class="card-body">
 

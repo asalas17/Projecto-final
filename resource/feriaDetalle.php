@@ -5,6 +5,8 @@ $activePage = 'ferias';
 include(__DIR__ . '/../templates/header.php');
 include(__DIR__ . '/../templates/nav.php');
 include(__DIR__ . '/../config/db_conn.php');
+require_once __DIR__ . '/../config/env.php';
+$gmapsApiKey = $_ENV['GMAPS_API_KEY'] ?? '';
 
 $feriaId = $_GET['id'] ?? null;
 $feria = null;
@@ -58,6 +60,8 @@ $connection->close();
         $ubicacionData = json_decode($feria['ubicacion'] ?? '', true) ?? [];
         $provincia = $ubicacionData['provincia'] ?? '';
         $ubicacion = $ubicacionData['ubicacion'] ?? '';
+        $lat = $ubicacionData['google_maps']['lat'] ?? null;
+        $lng = $ubicacionData['google_maps']['lng'] ?? null;
         ?>
         <div class="row gx-4 gx-lg-5 align-items-center my-5">
             <div class="col-lg-7 mb-4 mb-lg-0">
@@ -87,6 +91,11 @@ $connection->close();
 
             </div>
         </div>
+        <?php if ($lat !== null && $lng !== null && $gmapsApiKey): ?>
+            <div class="my-4">
+                <div id="map" style="height: 300px;" class="rounded shadow"></div>
+            </div>
+        <?php endif; ?>
         <div class="card bg-success bg-opacity-10 my-5 py-4 text-center border-0 shadow-sm">
             <div class="card-body">
                 <h4 class="text-success m-0">
@@ -121,6 +130,22 @@ $connection->close();
 <?php endif; ?>
 
 </div>
+
+<?php if ($lat !== null && $lng !== null && $gmapsApiKey): ?>
+    <script>
+        function initMap() {
+            const position = { lat: <?= htmlspecialchars($lat, ENT_QUOTES) ?>, lng: <?= htmlspecialchars($lng, ENT_QUOTES) ?> };
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: position,
+                zoom: 15
+            });
+            new google.maps.Marker({ position: position, map: map });
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=<?= htmlspecialchars($gmapsApiKey, ENT_QUOTES) ?>&callback=initMap"
+        async defer></script>
+<?php endif; ?>
 
 <?php
 include(__DIR__ . '/../templates/footer.php');

@@ -51,7 +51,10 @@ $nombre = $_SESSION['user_name'] ?? null;
             <ul class="dropdown-menu dropdown-menu-end">
               <?php if ($rol === 'agricultor'): ?>
                 <li><a class="dropdown-item" href="perfil.php"><i class="bi bi-person-circle"></i> Perfil</a></li>
-                <li><a class="dropdown-item" href="crearProducto.php"><i class="bi bi-plus-circle"></i> Crear producto</a>
+                <li>
+                  <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#crearProductoModal">
+                    <i class="bi bi-plus-circle"></i> Crear producto
+                  </button>
                 </li>
 
               <?php endif; ?>
@@ -71,3 +74,6 @@ $nombre = $_SESSION['user_name'] ?? null;
     </div>
   </div>
 </nav>
+<?php if ($rol === 'agricultor') {
+    include __DIR__ . '/../resource/crearProducto.php';
+} ?>
