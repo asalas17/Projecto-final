@@ -51,7 +51,7 @@ $stmt->fetch();
 $stmt->close();
 
 $productos = [];
-$stmt = $connection->prepare('SELECT id, nombre, descripcion, precio FROM productos WHERE usuario_id = ?');
+$stmt = $connection->prepare('SELECT id, nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
 $stmt->bind_param('i', $userId);
 $stmt->execute();
 $result = $stmt->get_result();
