@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombreProd = $_POST['nombre'] ?? '';
         $descProd = $_POST['descripcion'] ?? '';
         $precioProd = (float)($_POST['precio'] ?? 0);
-        $stmt = $connection->prepare('INSERT INTO productos (usuario_id, nombre, descripcion, precio) VALUES (?, ?, ?, ?)');
+        $stmt = $connection->prepare('INSERT INTO productos (agricultor_id, nombre, descripcion, precio) VALUES (?, ?, ?, ?)');
         $stmt->bind_param('issd', $userId, $nombreProd, $descProd, $precioProd);
         $stmt->execute();
         $stmt->close();
