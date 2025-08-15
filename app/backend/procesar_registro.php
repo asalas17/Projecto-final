@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../config/db_conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('location: registro.php');
+    header('Location: ../../resource/registro.php');
     exit;
 }
 
