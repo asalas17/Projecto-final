@@ -8,7 +8,7 @@ include(__DIR__ . '/../config/db_conn.php');
 
 $ferias = [];
 
-$sql = "SELECT f.id, f.nombre, f.fecha_inicio, f.fecha_fin, f.ubicacion, f.fechaCreacion, f.fechaActualizado,
+$sql = "SELECT f.id, f.nombre, f.descripcion, f.fecha_inicio, f.fecha_fin, f.ubicacion, f.fechaCreacion, f.fechaActualizado,
        i.image_url, i.image_path, i.alt_text FROM ferias f LEFT JOIN feria_imagen i ON i.feria_id = f.id
        ORDER BY f.fechaCreacion DESC";
 $result = $connection->query($sql);
@@ -88,6 +88,7 @@ $connection->close();
       </div>
     </div>
     <?php include(__DIR__ . '/crearFeria.php'); ?>
+    <?php include(__DIR__ . '/editarFeria.php'); ?>
   <?php endif; ?>
 
 </div>
@@ -125,7 +126,23 @@ $connection->close();
                 <?php if ($rol === 'agricultor'): ?>
                   <a class="btn btn-success ms-2" href="asistirFeria.php">Inscribirme</a>
                 <?php elseif ($rol === 'admin'): ?>
-                  <a class="btn btn-warning ms-2" href="editarFeria.php">Editar</a>
+                  <?php
+                  $ubicacionData = json_decode($feria['ubicacion'], true) ?? [];
+                  $provincia = $ubicacionData['provincia'] ?? '';
+                  $ubicacion = $ubicacionData['ubicacion'] ?? '';
+                  $lat = $ubicacionData['google_maps']['lat'] ?? '';
+                  $lng = $ubicacionData['google_maps']['lng'] ?? '';
+                  ?>
+                  <button class="btn btn-warning ms-2 editarFeriaBtn" data-bs-toggle="modal"
+                    data-bs-target="#editarFeriaModal" data-id="<?= $feria['id'] ?>"
+                    data-nombre="<?= htmlspecialchars($feria['nombre'], ENT_QUOTES) ?>"
+                    data-descripcion="<?= htmlspecialchars($feria['descripcion'], ENT_QUOTES) ?>"
+                    data-fecha_inicio="<?= $feria['fecha_inicio'] ?>" data-fecha_fin="<?= $feria['fecha_fin'] ?>"
+                    data-provincia="<?= htmlspecialchars($provincia, ENT_QUOTES) ?>"
+                    data-ubicacion="<?= htmlspecialchars($ubicacion, ENT_QUOTES) ?>"
+                    data-lat="<?= htmlspecialchars($lat, ENT_QUOTES) ?>" data-lng="<?= htmlspecialchars($lng, ENT_QUOTES) ?>"
+                    data-image-url="<?= htmlspecialchars($feria['image_url'], ENT_QUOTES) ?>"
+                    data-image-path="<?= htmlspecialchars($feria['image_path'], ENT_QUOTES) ?>">Editar</button>
                   <a class="btn btn-danger ms-2" href="eliminarFeria.php">Eliminar</a>
                 <?php endif; ?>
               </div>
