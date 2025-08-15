@@ -1,3 +1,10 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$rol = $_SESSION['user_rol'] ?? null;
+$nombre = $_SESSION['user_name'] ?? null;
+?>
 <nav class="navbar navbar-expand-lg navbar-agronatura py-3">
   <div class="container-fluid">
     <a class="navbar-brand navbar-brand-agronatura ps-2" href="inicio.php">
@@ -33,9 +40,24 @@
       </ul>
 
       <div class="d-flex pe-2">
-        <a href="inicioSesion.php" class="btn btn-agronatura-outline me-2">
-          <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-        </a>
+        <?php if ($nombre): ?>
+          <div class="dropdown">
+            <a class="btn btn-agronatura-outline dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person"></i> <?= htmlspecialchars($nombre) ?>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <?php if ($rol === 'agricultor'): ?>
+              <li><a class="dropdown-item" href="perfil.php"><i class="bi bi-person-circle"></i> Perfil</a></li>
+              <?php endif; ?>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="cerrarSesion.php"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+            </ul>
+          </div>
+        <?php else: ?>
+          <a href="inicioSesion.php" class="btn btn-agronatura-outline me-2">
+            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+          </a>
+        <?php endif; ?>
       </div>
     </div>
   </div>
