@@ -16,10 +16,6 @@
     <link rel="stylesheet" href="..\app\css\footer.css">
     <link rel="stylesheet" href="..\app\css\header.css">
 
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=console.debug&libraries=maps,marker&v=beta">
-    </script>
-
 </head>
 
 <body>

@@ -41,6 +41,10 @@ if ($nombre === '') {
     $errors[] = "El nombre completo es obligatorio.";
 }
 
+if ($rol === 'agricultor' && ($descripcion === null || $descripcion === '')) {
+    $errors[] = "La descripción es obligatoria para agricultores.";
+}
+
 // 5. Comprobar si ya existe el correo
 if (empty($errors)) {
     $stmt = $connection->prepare("SELECT id FROM usuarios WHERE email = ?");
