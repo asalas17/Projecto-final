@@ -25,6 +25,14 @@ if ($result === false) {
 $connection->close();
 ?>
 
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+</style>
+
 <!-- Header -->
 <header class="bg-success py-5 text-white agronaturaHeader">
   <div class="container px-4 px-lg-5 my-5">
@@ -75,7 +83,8 @@ $connection->close();
       <div class="col-md-5"></div>
       <div class="col-md-3"></div>
       <div class="col-md-2 mt-4 text-end">
-        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#crearFeriaModal">Crear feria</button>
+        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#crearFeriaModal">Crear
+          feria</button>
       </div>
     </div>
     <?php include(__DIR__ . '/crearFeria.php'); ?>
@@ -83,7 +92,6 @@ $connection->close();
 
 </div>
 
-<!-- Tarjetas de ferias -->
 <!-- Tarjetas de ferias -->
 <section class="py-5">
   <div class="container px-4 px-lg-5 mt-4">
