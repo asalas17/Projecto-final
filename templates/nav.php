@@ -33,9 +33,15 @@
       </ul>
 
       <div class="d-flex pe-2">
-        <a href="inicioSesion.php" class="btn btn-agronatura-outline me-2">
-          <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-        </a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <a href="../app/backend/procesar_logout.php" class="btn btn-agronatura-outline me-2">
+            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+          </a>
+        <?php else: ?>
+          <a href="inicioSesion.php" class="btn btn-agronatura-outline me-2">
+            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+          </a>
+        <?php endif; ?>
       </div>
     </div>
   </div>
