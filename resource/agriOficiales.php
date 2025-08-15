@@ -1,9 +1,20 @@
 <?php
+require_once __DIR__ . '/../config/db_conn.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+$Parsedown = new Parsedown();
+
 $activePage = 'sedes';
 include(__DIR__ . '/../templates/header.php');
 include(__DIR__ . '/../templates/nav.php');
-?>
 
+$agricultores = [];
+$result = $connection->query("SELECT id, nombre, descripcion FROM usuarios WHERE rol = 'agricultor' ORDER BY nombre");
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $agricultores[] = $row;
+    }
+}
+?>
 <!-- Header -->
 <header class="bg-success py-5 text-white agronaturaHeader">
   <div class="container px-4 px-lg-5 my-5">
@@ -52,17 +63,16 @@ include(__DIR__ . '/../templates/nav.php');
 <!-- Cards de productores -->
 <div class="container px-4 px-lg-5 mb-5">
   <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
-
-    <!-- Card de ejemplo -->
+    <?php foreach ($agricultores as $a): ?>
     <div class="col mb-5">
       <div class="card h-100 shadow border-0">
         <div class="card-body">
           <h5 class="card-title text-success fw-bold">
-            <i class="bi bi-cup-hot"></i> Productor de café
+            <i class="bi bi-person-circle"></i> <?= htmlspecialchars($a['nombre']) ?>
           </h5>
-          <p class="card-text text-muted">
-            Somos una familia productora de café en La Fortuna, San Carlos. Calidad garantizada y postres basados en café que te encantarán.
-          </p>
+          <div class="card-text text-muted">
+            <?= $Parsedown->text($a['descripcion'] ?? '') ?>
+          </div>
         </div>
         <div class="card-footer bg-transparent border-0 text-center">
           <a class="btn btn-outline-success btn-sm" href="#!">
@@ -71,9 +81,7 @@ include(__DIR__ . '/../templates/nav.php');
         </div>
       </div>
     </div>
-
-    <!-- Puedes duplicar esta tarjeta para más productores -->
-
+    <?php endforeach; ?>
   </div>
 </div>
 
