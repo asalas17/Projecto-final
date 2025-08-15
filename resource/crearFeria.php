@@ -1,5 +1,6 @@
 <?php
-$gmapsApiKey = getenv('GMAPS_API_KEY');
+require_once __DIR__ . '/../config/env.php';
+$gmapsApiKey = $_ENV['GMAPS_API_KEY'] ?? '';
 ?>
 
 <div class="modal fade" id="crearFeriaModal" tabindex="-1" aria-hidden="true">
@@ -102,5 +103,9 @@ $gmapsApiKey = getenv('GMAPS_API_KEY');
 
 <script src="../app/js/crearFeria.js"></script>
 <?php if ($gmapsApiKey): ?>
+<script>
+    const gmapsApiKey = "<?php echo htmlspecialchars($gmapsApiKey, ENT_QUOTES); ?>";
+    console.log('GMAPS API Key:', gmapsApiKey);
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo htmlspecialchars($gmapsApiKey, ENT_QUOTES); ?>&callback=initMap&libraries=places" async defer></script>
 <?php endif; ?>

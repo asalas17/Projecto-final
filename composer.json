@@ -1,0 +1,6 @@
+{
+    "name": "projecto/final",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
