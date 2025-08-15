@@ -1,6 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 $rol = $_SESSION['user_rol'] ?? null;
 $nombre = $_SESSION['user_name'] ?? null;
@@ -27,11 +27,13 @@ $nombre = $_SESSION['user_name'] ?? null;
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?= ($activePage == 'inscribirse') ? 'active' : '' ?>" href="inscribirse.php">Inscribirse</a>
+          <a class="nav-link <?= ($activePage == 'inscribirse') ? 'active' : '' ?>"
+            href="inscribirse.php">Inscribirse</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?= ($activePage == 'sedes') ? 'active' : '' ?>" href="agriOficiales.php">Agricultores oficiales</a>
+          <a class="nav-link <?= ($activePage == 'sedes') ? 'active' : '' ?>" href="agriOficiales.php">Agricultores
+            oficiales</a>
         </li>
 
         <li class="nav-item">
@@ -42,15 +44,22 @@ $nombre = $_SESSION['user_name'] ?? null;
       <div class="d-flex pe-2">
         <?php if ($nombre): ?>
           <div class="dropdown">
-            <a class="btn btn-agronatura-outline dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="btn btn-agronatura-outline dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
               <i class="bi bi-person"></i> <?= htmlspecialchars($nombre) ?>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <?php if ($rol === 'agricultor'): ?>
-              <li><a class="dropdown-item" href="perfil.php"><i class="bi bi-person-circle"></i> Perfil</a></li>
+                <li><a class="dropdown-item" href="perfil.php"><i class="bi bi-person-circle"></i> Perfil</a></li>
+                <li><a class="dropdown-item" href="crearProducto.php"><i class="bi bi-plus-circle"></i> Crear producto</a>
+                </li>
+
               <?php endif; ?>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="cerrarSesion.php"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="cerrarSesion.php"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
+              </li>
             </ul>
           </div>
         <?php else: ?>

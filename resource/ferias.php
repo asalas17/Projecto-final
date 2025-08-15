@@ -124,6 +124,8 @@ $connection->close();
               </div>
 
               <div class="text-center pb-3">
+                <a class="btn btn-outline-success" href="feriaDetalle.php?id=<?= $feria['id'] ?>">Ver detalles</a>
+
                 <?php if ($rol === 'agricultor'): ?>
                   <a class="btn btn-success ms-2" href="asistirFeria.php">Inscribirme</a>
                 <?php elseif ($rol === 'admin'): ?>
@@ -148,7 +150,9 @@ $connection->close();
                     data-bs-target="#eliminarFeriaModal" data-id="<?= $feria['id'] ?>"
                     data-nombre="<?= htmlspecialchars($feria['nombre'], ENT_QUOTES) ?>">Eliminar</button>
 
+
                 <?php endif; ?>
+
               </div>
             </div>
           </div>
