@@ -89,6 +89,7 @@ $connection->close();
     </div>
     <?php include(__DIR__ . '/crearFeria.php'); ?>
     <?php include(__DIR__ . '/editarFeria.php'); ?>
+    <?php include(__DIR__ . '/borrarFeria.php'); ?>
   <?php endif; ?>
 
 </div>
@@ -143,7 +144,10 @@ $connection->close();
                     data-lat="<?= htmlspecialchars($lat, ENT_QUOTES) ?>" data-lng="<?= htmlspecialchars($lng, ENT_QUOTES) ?>"
                     data-image-url="<?= htmlspecialchars($feria['image_url'], ENT_QUOTES) ?>"
                     data-image-path="<?= htmlspecialchars($feria['image_path'], ENT_QUOTES) ?>">Editar</button>
-                  <a class="btn btn-danger ms-2" href="eliminarFeria.php">Eliminar</a>
+                  <button class="btn btn-danger ms-2 eliminarFeriaBtn" data-bs-toggle="modal"
+                    data-bs-target="#eliminarFeriaModal" data-id="<?= $feria['id'] ?>"
+                    data-nombre="<?= htmlspecialchars($feria['nombre'], ENT_QUOTES) ?>">Eliminar</button>
+
                 <?php endif; ?>
               </div>
             </div>
