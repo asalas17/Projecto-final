@@ -39,6 +39,7 @@ if (empty($errors)) {
       $_SESSION['user_id'] = $row['id'];
       $_SESSION['user_name'] = $row['nombre'];
       $_SESSION['user_rol'] = $row['rol'];
+      $_SESSION['is_admin'] = ($row['rol'] === 'admin');
       header('Location: ../../resource/inicio.php');
       exit;
     } else {

@@ -11,11 +11,7 @@ include(__DIR__ . '/../templates/nav.php');
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
         <div class="col-lg-7 mb-4 mb-lg-0">
             <div class="rounded shadow overflow-hidden">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62732.63801983448!2d-85.27050207832029!3d10.6734116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f755c029f4b3dfb%3A0x81f096afc50be4e3!2sSalon%20Comunal%20de%20Fortuna!5e0!3m2!1ses!2scr!4v1752210073999!5m2!1ses!2scr"
-                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+
             </div>
         </div>
         <div class="col-lg-5">
