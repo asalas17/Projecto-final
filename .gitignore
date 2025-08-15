@@ -1,7 +1,2 @@
-# Environment variables
-
 # macOS files
 .DS_Store
-
-# Composer dependencies
-# (committed for easier setup)
