@@ -60,6 +60,16 @@ class ComposerStaticInita93009ced1f31041d441d83880c1f793
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'Parsedown' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
@@ -74,6 +84,7 @@ class ComposerStaticInita93009ced1f31041d441d83880c1f793
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita93009ced1f31041d441d83880c1f793::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita93009ced1f31041d441d83880c1f793::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita93009ced1f31041d441d83880c1f793::$prefixesPsr0;
             $loader->classMap = ComposerStaticInita93009ced1f31041d441d83880c1f793::$classMap;
 
         }, null, ClassLoader::class);

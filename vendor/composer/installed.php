@@ -3,13 +3,22 @@
         'name' => 'projecto/final',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '519d51451e8611a600f7a18432d60367e6f1f75c',
+        'reference' => '5ced0141fcf54f37d7a396b5fca92de3d0e24b92',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'erusev/parsedown' => array(
+            'pretty_version' => '1.7.4',
+            'version' => '1.7.4.0',
+            'reference' => 'cb17b6477dfff935958ba01325f2e8a2bfa6dab3',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../erusev/parsedown',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.3',
             'version' => '1.1.3.0',
@@ -31,7 +40,7 @@
         'projecto/final' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '519d51451e8611a600f7a18432d60367e6f1f75c',
+            'reference' => '5ced0141fcf54f37d7a396b5fca92de3d0e24b92',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
