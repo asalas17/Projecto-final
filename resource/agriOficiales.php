@@ -14,6 +14,7 @@ $agricultores = [];
 // Parámetros de búsqueda
 $query = trim($_GET['query'] ?? '');
 $provinciaIn = trim($_GET['provincia'] ?? '');
+$mostrarProductos = ($_GET['productos'] ?? '0') === '1';
 
 $sql = "SELECT DISTINCT u.id, u.nombre, u.descripcion, u.ubicacion
         FROM usuarios u
@@ -50,7 +51,7 @@ $result = $stmt->get_result();
 if ($result) {
   while ($row = $result->fetch_assoc()) {
     // Obtener productos del agricultor
-    $stmtProd = $connection->prepare('SELECT id, nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
+    $stmtProd = $connection->prepare('SELECT id, nombre, descripcion, precio, imagen_url FROM productos WHERE agricultor_id = ?');
     $stmtProd->bind_param('i', $row['id']);
     $stmtProd->execute();
     $resProd = $stmtProd->get_result();
@@ -119,7 +120,7 @@ $connection->close();
 <!-- Switch para mostrar productos -->
 <div class="container mb-4 d-flex justify-content-end">
   <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" id="toggleProductos">
+    <input class="form-check-input" type="checkbox" id="toggleProductos" <?= $mostrarProductos ? 'checked' : '' ?>>
     <label class="form-check-label" for="toggleProductos">Mostrar productos</label>
   </div>
 </div>
@@ -134,13 +135,19 @@ $connection->close();
             <h5 class="card-title text-success fw-bold mb-0">
               <i class="bi bi-person-circle"></i> <?= htmlspecialchars($a['nombre']) ?>
             </h5>
-            <div class="productos-list d-none mt-3" style="max-height: 8rem; overflow-y: auto;">
+            <div class="productos-list <?= $mostrarProductos ? '' : 'd-none' ?> mt-3"
+              style="max-height: 8rem; overflow-y: auto;">
               <?php if (!empty($a['productos'])): ?>
                 <ul class="list-unstyled mb-0 text-start">
                   <?php foreach ($a['productos'] as $p): ?>
                     <li class="d-flex justify-content-between align-items-center">
-                      <span><?= htmlspecialchars($p['nombre']) ?></span>
-                      <span class="badge rounded-pill bg-success-subtle text-success">
+                      <div class="d-flex align-items-center">
+                        <?php if (!empty($p['imagen_url'])): ?>
+                          <img src="<?= htmlspecialchars($p['imagen_url']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>"
+                            style="height:40px;width:auto;" class="me-2">
+                        <?php endif; ?>
+                        <span><?= htmlspecialchars($p['nombre']) ?></span>
+                      </div> <span class="badge rounded-pill bg-success-subtle text-success">
                         ₡<?= htmlspecialchars($p['precio']) ?>
                       </span>
                     </li>
@@ -189,6 +196,7 @@ $connection->close();
                 <table class="table table-sm table-bordered mb-0">
                   <thead>
                     <tr>
+                      <th>Imagen</th>
                       <th>Nombre</th>
                       <th>Descripción</th>
                       <th class="text-end">Precio</th>
@@ -200,6 +208,12 @@ $connection->close();
                   <tbody>
                     <?php foreach ($a['productos'] as $p): ?>
                       <tr>
+                        <td>
+                          <?php if (!empty($p['imagen_url'])): ?>
+                            <img src="<?= htmlspecialchars($p['imagen_url']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>"
+                              style="height:40px;width:auto;">
+                          <?php endif; ?>
+                        </td>
                         <td><?= htmlspecialchars($p['nombre']) ?></td>
                         <td><?= htmlspecialchars($p['descripcion']) ?></td>
                         <td class="text-end">₡<?= htmlspecialchars($p['precio']) ?></td>

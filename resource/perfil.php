@@ -90,6 +90,7 @@ include(__DIR__ . '/../templates/nav.php');
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Precio</th>
@@ -99,6 +100,12 @@ include(__DIR__ . '/../templates/nav.php');
                         <tbody>
                             <?php foreach ($productos as $p): ?>
                                 <tr>
+                                    <td>
+                                        <?php if (!empty($p['imagen_url'])): ?>
+                                            <img src="<?= htmlspecialchars($p['imagen_url']) ?>"
+                                                alt="<?= htmlspecialchars($p['nombre']) ?>" style="height:50px;width:auto;">
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= htmlspecialchars($p['nombre']) ?></td>
                                     <td><?= htmlspecialchars($p['descripcion']) ?></td>
                                     <td><?= number_format($p['precio'], 2) ?></td>

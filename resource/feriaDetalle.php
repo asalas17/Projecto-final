@@ -41,7 +41,7 @@ if ($feriaId !== null) {
         $stmtAgr->execute();
         $resAgr = $stmtAgr->get_result();
         while ($row = $resAgr->fetch_assoc()) {
-            $stmtProd = $connection->prepare('SELECT nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
+            $stmtProd = $connection->prepare('SELECT nombre, descripcion, precio, imagen_url FROM productos WHERE agricultor_id = ?');
             $stmtProd->bind_param('i', $row['id']);
             $stmtProd->execute();
             $resProd = $stmtProd->get_result();
@@ -180,8 +180,7 @@ $connection->close();
                             </div>
                             <div class="card-footer bg-transparent border-0 text-center">
                                 <button class="btn btn-outline-success btn-sm" data-bs-toggle="offcanvas"
-                                    data-bs-target="#agricultorModal<?= $a['id'] ?>"
-                                    aria-controls="agricultorModal<?= $a['id'] ?>">
+                                    data-bs-target="#agricultorModal<?= $a['id'] ?>" aria-controls="agricultorModal<?= $a['id'] ?>">
                                     <i class="bi bi-box-arrow-up-right"></i> Ver detalles
                                 </button>
                             </div>
@@ -217,6 +216,7 @@ $connection->close();
                                             <table class="table table-sm table-bordered mb-0">
                                                 <thead>
                                                     <tr>
+                                                        <th>Imagen</th>
                                                         <th>Nombre</th>
                                                         <th>Descripción</th>
                                                         <th class="text-end">Precio</th>
@@ -225,6 +225,13 @@ $connection->close();
                                                 <tbody>
                                                     <?php foreach ($a['productos'] as $p): ?>
                                                         <tr>
+                                                            <td>
+                                                                <?php if (!empty($p['imagen_url'])): ?>
+                                                                    <img src="<?= htmlspecialchars($p['imagen_url']) ?>"
+                                                                        alt="<?= htmlspecialchars($p['nombre']) ?>"
+                                                                        style="height:40px;width:auto;">
+                                                                <?php endif; ?>
+                                                            </td>
                                                             <td><?= htmlspecialchars($p['nombre']) ?></td>
                                                             <td><?= htmlspecialchars($p['descripcion']) ?></td>
                                                             <td class="text-end">₡<?= htmlspecialchars($p['precio']) ?></td>

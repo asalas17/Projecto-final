@@ -32,19 +32,19 @@ include(__DIR__ . '/../templates/nav.php');
                 <div class="feature bg-success text-white rounded-3 mb-3"><i class="bi bi-map"></i></div>
                 <h2 class="h4 fw-bolder">Mapa de ferias</h2>
                 <p>Encuentra ferias agrícolas cerca de tu comunidad con horarios, ubicación y productos destacados.</p>
-                <a class="text-decoration-none" href="#!">Explorar <i class="bi bi-arrow-right"></i></a>
+                <a class="text-decoration-none" href="ferias.php?map=1">Explorar <i class="bi bi-arrow-right"></i></a>
             </div>
             <div class="col-lg-4 mb-5 mb-lg-0">
                 <div class="feature bg-success text-white rounded-3 mb-3"><i class="bi bi-basket"></i></div>
                 <h2 class="h4 fw-bolder">Productos frescos y locales</h2>
                 <p>Conoce qué productos están en temporada y apoya directamente a los agricultores nacionales.</p>
-                <a class="text-decoration-none" href="#!">Ver productos <i class="bi bi-arrow-right"></i></a>
+                <a class="text-decoration-none" href="agriOficiales.php?productos=1">Ver productos <i class="bi bi-arrow-right"></i></a>
             </div>
             <div class="col-lg-4">
                 <div class="feature bg-success text-white rounded-3 mb-3"><i class="bi bi-megaphone"></i></div>
                 <h2 class="h4 fw-bolder">Conoce a los agricultores</h2>
                 <p>Date un paseo por el catalogo e historia de los encargados de llevar la frescura hasta tu hogar.</p>
-                <a class="text-decoration-none" href="#!">Listado de agricultores <i class="bi bi-arrow-right"></i></a>
+                <a class="text-decoration-none" href="agriOficiales.php?productos=0">Listado de agricultores <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
     </div>

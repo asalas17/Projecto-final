@@ -272,6 +272,13 @@ include(__DIR__ . '/../templates/footer.php');
       }
     <?php endif; ?>
   }
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('map') === '1') {
+      const offcanvas = new bootstrap.Offcanvas(document.getElementById('mapaFerias'));
+      offcanvas.show();
+    }
+  });
 </script>
 <?php if ($gmapsApiKey): ?>
   <script
