@@ -22,7 +22,8 @@ include(__DIR__ . '/../templates/nav.php');
       <!-- Sección Acerca -->
       <section class="mb-5">
         <h2 class="text-success fw-bold mb-3">
-          <i class="bi bi-leaf-fill"></i> ¿Qué es Agronatura?
+          <img src="/Projecto-final/icon.png"       style="filter: invert(40%) sepia(80%) saturate(600%) hue-rotate(100deg) brightness(95%) contrast(90%);"
+ alt="Agronatura" width="40" class="me-2"> ¿Qué es Agronatura?
         </h2>
         <p class="text-muted">
           Agronatura nace de la necesidad de conectar agricultores y consumidores a través de una plataforma sencilla que fortalece las ferias del agricultor. Promovemos la comercialización local, organizamos y difundimos eventos para incentivar el consumo de productos frescos y apoyar el desarrollo sostenible de las comunidades agrícolas de Costa Rica.
