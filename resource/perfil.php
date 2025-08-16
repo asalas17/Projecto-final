@@ -1,7 +1,8 @@
 <?php
+require_once __DIR__ . '/../config/env.php';
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['user_rol'] !== 'agricultor') {
-    header('Location: inicio.php');
+    header('Location: ' . BASE_PATH . '/resource/inicio.php');
     exit;
 }
 

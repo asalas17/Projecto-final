@@ -1,24 +1,25 @@
 <?php
+require_once __DIR__ . '/../../config/env.php';
 require_once __DIR__ . '/../../config/db_conn.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../resource/inicio.php');
+    header('Location: ' . BASE_PATH . '/resource/inicio.php');
     exit();
 }
 
 $agricultor_id = $_SESSION['user_id'] ?? null;
 $rol = $_SESSION['user_rol'] ?? '';
 if (!$agricultor_id) {
-    header('Location: ../../resource/inicioSesion.php');
+    header('Location: ' . BASE_PATH . '/resource/inicioSesion.php');
     exit();
 }
 
 
 if ($rol !== 'agricultor') {
-    header('Location: ../../resource/inicio.php');
+    header('Location: ' . BASE_PATH . '/resource/inicio.php');
     exit();
 }
 
@@ -46,6 +47,6 @@ $stmt->bind_param('issdiss', $agricultor_id, $nombre, $descripcion, $precio, $st
 $stmt->execute();
 $stmt->close();
 
-header('Location: ../../resource/perfil.php');
+header('Location: ' . BASE_PATH . '/resource/perfil.php');
 exit();
 ?>

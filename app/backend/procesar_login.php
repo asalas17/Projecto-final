@@ -2,13 +2,13 @@
 // procesar_login.php
 session_start();
 
+require_once __DIR__ . '/../../config/env.php';
 // 1. Carga la conexión (archivo en config/)
 require_once __DIR__ . '/../../config/db_conn.php';
 
 // 2. Sólo aceptamos POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  // Ruta relativa desde app/backend a resource/inicioSesion.php
-  header('Location: ../../resource/inicioSesion.php');
+  header('Location: ' . BASE_PATH . '/resource/inicioSesion.php');
   exit;
 }
 
@@ -40,7 +40,7 @@ if (empty($errors)) {
       $_SESSION['user_name'] = $row['nombre'];
       $_SESSION['user_rol'] = $row['rol'];
       $_SESSION['is_admin'] = ($row['rol'] === 'admin');
-      header('Location: ../../resource/inicio.php');
+      header('Location: ' . BASE_PATH . '/resource/inicio.php');
       exit;
     } else {
       $errors[] = 'Contraseña incorrecta.';
@@ -55,5 +55,5 @@ if (empty($errors)) {
 // 7. Si hay errores, volvemos al login enviando el mensaje por GET
 //    La ruta debe ser relativa a este script (app/backend → resource/)
 $errorParam = http_build_query(['error' => $errors[0]]);
-header("Location: ../../resource/inicioSesion.php?{$errorParam}");
+header('Location: ' . BASE_PATH . "/resource/inicioSesion.php?{$errorParam}");
 exit;

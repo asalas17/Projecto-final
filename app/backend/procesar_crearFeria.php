@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../config/env.php';
 require_once '../../config/db_conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtImg->close();
     }
 
-    header('Location: ../../resource/ferias.php');
+    header('Location: ' . BASE_PATH . '/resource/ferias.php');
     exit();
 }
 ?>
