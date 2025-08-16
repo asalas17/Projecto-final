@@ -35,7 +35,7 @@ if (isset($_GET['registro']) && $_GET['registro'] == 'ok') {
 
                         <!-- Título e ícono -->
                         <h2 class="fw-bold text-success text-center mb-4">
-                            <img src="/Projecto-final/Agronatura.png" alt="Agronatura" width="200">
+                            <img src="/Projecto-final/img/Agronatura.png" alt="Agronatura" width="200">
                         </h2>
 
                         <!-- Mensaje de registro o error -->

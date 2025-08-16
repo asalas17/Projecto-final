@@ -2,41 +2,41 @@
 
 
 .navbar-agronatura {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #198754;
+    background-color: #f3eaff;
+    border-bottom: 2px solid #6c2efa;
   }
 
   .navbar-agronatura .nav-link {
-    color: #198754;
+    color: #6c2efa;
     transition: color 0.3s, text-decoration 0.3s;
   }
 
   .navbar-agronatura .nav-link:hover,
   .navbar-agronatura .nav-link:focus {
-    color: #157347;
+    color: #4a05e7;
     text-decoration: underline;
   }
 
   .navbar-agronatura .nav-link.active {
     font-weight: 600;
-    color: #157347 !important;
+    color: #4a05e7 !important;
     text-decoration: underline;
   }
 
   .btn-agronatura-outline {
-    border-color: #198754;
-    color: #198754;
+    border-color: #6c2efa;
+    color: #6c2efa;
     transition: background-color 0.3s, color 0.3s;
   }
 
   .btn-agronatura-outline:hover {
-    background-color: #198754;
+    background-color: #6c2efa;
     color: #fff;
   }
 
   .navbar-brand-agronatura {
     font-weight: 700;
-    color: #198754;
+    color: #6c2efa;
     display: flex;
     align-items: center;
     gap: 0.5rem;

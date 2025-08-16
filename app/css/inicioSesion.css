@@ -2,12 +2,13 @@
 :root {
   --font: "Inter", sans-serif;
 
-  --color-bg-light: #f0f7f4;
+  --color-bg-light: #f3eaff;
   --color-card-bg: #ffffff;
   --color-primary: #198754;
-  --color-primary-hover: #157347;
-  --color-secondary: #0d6efd;
-  --color-secondary-light: #d1e7ff;
+ --color-primary: #6c2efa;
+  --color-primary-hover: #4a05e7;
+  --color-secondary: #bda1fc;
+  --color-secondary-light: #e5dbfe;
   --color-text: #333333;
 
   --radius-card: 1rem;
@@ -28,7 +29,7 @@
 /* =============== Global =============== */
 body {
   font-family: var(--font);
-  background: linear-gradient(135deg, #eafaf1 0%, var(--color-bg-light) 100%);
+  background: linear-gradient(135deg, #ede7ff 0%, var(--color-bg-light) 100%);
   color: var(--color-text);
   margin: 0;
   padding: 0;

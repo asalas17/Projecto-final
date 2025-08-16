@@ -3,6 +3,7 @@
 }
 
 .link-hover:hover {
+    color: #bda1fc !important; /* tono morado más claro */
     color: #20c997 !important; /* tono verde más claro */
     text-decoration: underline;
 }

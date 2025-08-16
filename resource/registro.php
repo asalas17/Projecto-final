@@ -17,7 +17,7 @@
     <div class="card mx-auto shadowb g-white shadow rounded-3 overflow-hidden" style="max-width: 1000px;">
       <div class="card-body">
         <h3 class="card-title text-center mb-4 text-success">
-          <img src="/Projecto-final/Agronatura.png" alt="Agronatura" width="200">
+          <img src="/Projecto-final/img/Agronatura.png" alt="Agronatura" width="200">
         </h3>
 
         <form id="regForm" action="../app/backend/procesar_registro.php" method="POST">
