@@ -86,6 +86,14 @@ if ($result) {
   </form>
 </div>
 
+<!-- Switch para mostrar productos -->
+<div class="container mb-4 d-flex justify-content-end">
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="toggleProductos">
+    <label class="form-check-label" for="toggleProductos">Mostrar productos</label>
+  </div>
+</div>
+
 <!-- Cards de productores -->
 <div class="container px-4 px-lg-5 mb-5">
   <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
@@ -96,6 +104,22 @@ if ($result) {
             <h5 class="card-title text-success fw-bold mb-0">
               <i class="bi bi-person-circle"></i> <?= htmlspecialchars($a['nombre']) ?>
             </h5>
+                        <div class="productos-list d-none mt-3" style="max-height: 8rem; overflow-y: auto;">
+              <?php if (!empty($a['productos'])): ?>
+                <ul class="list-unstyled mb-0 text-start">
+                  <?php foreach ($a['productos'] as $p): ?>
+                    <li class="d-flex justify-content-between align-items-center">
+                      <span><?= htmlspecialchars($p['nombre']) ?></span>
+                      <span class="badge rounded-pill bg-success-subtle text-success">
+                        ₡<?= htmlspecialchars($p['precio']) ?>
+                      </span>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              <?php else: ?>
+                <p class="text-muted mb-0">Este agricultor no ha registrado productos.</p>
+              <?php endif; ?>
+            </div>
           </div>
           <div class="card-footer bg-transparent border-0 text-center">
             <button class="btn btn-outline-success btn-sm" data-bs-toggle="offcanvas"
