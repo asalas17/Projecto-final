@@ -1,8 +1,8 @@
 <?php
 
-$server = "localhost";
-$user = "root";
-$pass = "";
+$server = "100.100.175.70";
+$user = "lucia";
+$pass = "luciaUfide1313";
 $db_name = "agronatura_db";
 $port = 3307;
 

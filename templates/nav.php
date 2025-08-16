@@ -8,8 +8,8 @@ $nombre = $_SESSION['user_name'] ?? null;
 <nav class="navbar navbar-expand-lg navbar-agronatura py-3">
   <div class="container-fluid">
     <a class="navbar-brand navbar-brand-agronatura ps-2" href="inicio.php">
-      <i class="bi bi-leaf"></i> Agronatura
-    </a>
+      <img src="/Agronatura.png" alt="Agronatura" width="120">
+</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
       aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">

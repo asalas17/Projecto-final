@@ -62,7 +62,7 @@ include(__DIR__ . '/../templates/nav.php');
 
       <hr class="my-5">
 
-      <!-- Sección Términos y Condiciones -->
+      <!-- Sección Términos y Condiciones --> 
       <section>
         <h2 class="text-success fw-bold mb-3">
           <i class="bi bi-file-earmark-text"></i> Términos y Condiciones
