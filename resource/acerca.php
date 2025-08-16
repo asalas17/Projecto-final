@@ -5,14 +5,21 @@ include(__DIR__ . '/../templates/nav.php');
 ?>
 
 <!-- Header -->
-<header class="bg-success py-5 text-white agronaturaHeader">
-  <div class="container px-4 px-lg-5 my-4">
-    <div class="text-center">
-      <h1 class="display-4 fw-bold">Acerca de Nosotros</h1>
-      <p class="lead text-white-50 mb-0">Conectamos comunidades con el corazón agrícola de Costa Rica</p>
-    </div>
+<header class="bg-success py-5 text-white agronaturaHeader position-relative">
+  <div class="container px-4 px-lg-5 my-4 text-center position-relative" style="z-index: 2;">
+    <h1 class="display-4 fw-bold">Acerca de Nosotros</h1>
+    <p class="lead text-white-50 mb-0">Conectamos comunidades con el corazón agrícola de Costa Rica</p>
   </div>
+
+<!-- Agregando img al header -->
+  <img src="Projecto-final/img/farmers.jpg" alt=""
+      alt="Decoración" 
+      style="position: absolute; top: 0; left: 0; width: 100%; height:100%; object-fit: cover; opacity: 0.2; z-index: 1;">
+
 </header>
+
+
+
 
 <!-- Contenido -->
 <div class="container my-5">
@@ -22,7 +29,7 @@ include(__DIR__ . '/../templates/nav.php');
       <!-- Sección Acerca -->
       <section class="mb-5">
         <h2 class="text-success fw-bold mb-3">
-          <img src="/Projecto-final/icon.png"       style="filter: invert(40%) sepia(80%) saturate(600%) hue-rotate(100deg) brightness(95%) contrast(90%);"
+          <img src="/Projecto-final/img/icon.png"       style="filter: invert(40%) sepia(80%) saturate(600%) hue-rotate(100deg) brightness(95%) contrast(90%);"
  alt="Agronatura" width="40" class="me-2"> ¿Qué es Agronatura?
         </h2>
         <p class="text-muted">
@@ -32,6 +39,85 @@ include(__DIR__ . '/../templates/nav.php');
       </section>
 
       <hr class="my-5">
+
+      <!-- FAQ -->
+<section class="mb-5">
+  <h3 class="fw-bold mb-3" style="color: #6c2efa;">Preguntas Frecuentes (FAQ)</h3>
+  <div class="accordion" id="faqAccordion">
+
+    <!-- Pregunta 1 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqHeading1">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1" style="background-color: #6c2efa; color: white;">
+          ¿Cómo puedo registrarme como agricultor en la plataforma?
+        </button>
+      </h2>
+      <div id="faqCollapse1" class="accordion-collapse collapse" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+        <div class="accordion-body" style="background-color: #f3eaff; color: #4a148c;">
+          Para registrarte como agricultor, debes completar el formulario de registro proporcionando tu información personal y detalles de tus productos. Una vez aprobado, podrás gestionar tus productos y participar en ferias locales.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqHeading2">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2" style="background-color: #6c2efa; color: white;">
+          ¿Qué tipo de productos puedo publicar?
+        </button>
+      </h2>
+      <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+        <div class="accordion-body" style="background-color: #f3eaff; color: #4a148c;">
+          Puedes publicar cualquier producto agrícola que cultives o produzcas, incluyendo frutas, verduras, plantas, semillas o productos procesados como mermeladas y conservas.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqHeading3">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3" style="background-color: #6c2efa; color: white;">
+          ¿Cómo puedo comprar productos como usuario registrado?
+        </button>
+      </h2>
+      <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+        <div class="accordion-body" style="background-color: #f3eaff; color: #4a148c;">
+          Los usuarios registrados pueden navegar por los productos de los agricultores, añadirlos al carrito y realizar pedidos directamente a través de la plataforma.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqHeading4">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4" style="background-color: #6c2efa; color: white;">
+          ¿Puedo modificar la información de mis productos después de publicarlos?
+        </button>
+      </h2>
+      <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#faqAccordion">
+        <div class="accordion-body" style="background-color: #f3eaff; color: #4a148c;">
+          Sí, los agricultores pueden actualizar la información de sus productos, como precio, cantidad disponible o descripción, en cualquier momento desde su panel de control.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqHeading5">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5" style="background-color: #6c2efa; color: white;">
+          ¿Qué hago si tengo problemas con un pedido o un agricultor?
+        </button>
+      </h2>
+      <div id="faqCollapse5" class="accordion-collapse collapse" aria-labelledby="faqHeading5" data-bs-parent="#faqAccordion">
+        <div class="accordion-body" style="background-color: #f3eaff; color: #4a148c;">
+          Para cualquier inconveniente, contacta a nuestro soporte a través de <a href="mailto:soporte@agronatura.cr" class="link-success">soporte@agronatura.cr</a>. Nuestro equipo te ayudará a resolver problemas con productos o pedidos.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
       <!-- Sección Contacto -->
       <section class="mb-5">
