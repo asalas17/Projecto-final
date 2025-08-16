@@ -12,7 +12,7 @@ include(__DIR__ . '/../templates/nav.php');
   </div>
 
 <!-- Agregando img al header -->
-  <img src="Projecto-final/img/farmers.jpg" alt=""
+  <img src="/Projecto-final/img/farmers.jpg" alt=""
       alt="Decoración" 
       style="position: absolute; top: 0; left: 0; width: 100%; height:100%; object-fit: cover; opacity: 0.2; z-index: 1;">
 
