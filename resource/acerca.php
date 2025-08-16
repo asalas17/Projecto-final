@@ -9,8 +9,7 @@ include(__DIR__ . '/../templates/nav.php');
   <div class="container px-4 px-lg-5 my-4 text-center position-relative" style="z-index: 2;">
     <h1 class="display-4 fw-bold">Acerca de Nosotros</h1>
 <p class="lead mb-0" style="color: rgba(255,255,255,0.9);">
-      Conectamos comunidades con el corazón agrícola de Costa Rica
-    </p>
+      Conectamos comunidades con el corazón agrícola de Costa Rica</p>
     </div>
 
 <!-- Agregando img al header -->
