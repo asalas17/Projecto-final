@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white py-5">
+<footer style="background-color: #6c2efa; color: white;" class="py-5">
     <div class="container px-5">
         <div class="row align-items-center">
             <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
