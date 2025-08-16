@@ -6,3 +6,9 @@
     color: #20c997 !important; /* tono verde más claro */
     text-decoration: underline;
 }
+
+.icon-footer {
+    width: 30px !important;     
+    height: auto;      
+    margin-bottom: 10px;  
+}
