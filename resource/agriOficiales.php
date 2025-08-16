@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/../config/db_conn.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 $Parsedown = new Parsedown();
@@ -7,12 +8,14 @@ $activePage = 'sedes';
 include(__DIR__ . '/../templates/header.php');
 include(__DIR__ . '/../templates/nav.php');
 
+$isAdmin = ($_SESSION['user_rol'] ?? '') === 'admin';
+
 $agricultores = [];
 $result = $connection->query("SELECT id, nombre, descripcion FROM usuarios WHERE rol = 'agricultor' ORDER BY nombre");
 if ($result) {
   while ($row = $result->fetch_assoc()) {
     // Obtener productos del agricultor
-    $stmtProd = $connection->prepare('SELECT nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
+    $stmtProd = $connection->prepare('SELECT id, nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
     $stmtProd->bind_param('i', $row['id']);
     $stmtProd->execute();
     $resProd = $stmtProd->get_result();
@@ -104,7 +107,7 @@ if ($result) {
             <h5 class="card-title text-success fw-bold mb-0">
               <i class="bi bi-person-circle"></i> <?= htmlspecialchars($a['nombre']) ?>
             </h5>
-                        <div class="productos-list d-none mt-3" style="max-height: 8rem; overflow-y: auto;">
+            <div class="productos-list d-none mt-3" style="max-height: 8rem; overflow-y: auto;">
               <?php if (!empty($a['productos'])): ?>
                 <ul class="list-unstyled mb-0 text-start">
                   <?php foreach ($a['productos'] as $p): ?>
@@ -162,6 +165,9 @@ if ($result) {
                       <th>Nombre</th>
                       <th>Descripción</th>
                       <th class="text-end">Precio</th>
+                      <?php if ($isAdmin): ?>
+                        <th>Acciones</th>
+                      <?php endif; ?>
                     </tr>
                   </thead>
                   <tbody>
@@ -170,6 +176,17 @@ if ($result) {
                         <td><?= htmlspecialchars($p['nombre']) ?></td>
                         <td><?= htmlspecialchars($p['descripcion']) ?></td>
                         <td class="text-end">₡<?= htmlspecialchars($p['precio']) ?></td>
+                        <?php if ($isAdmin): ?>
+                          <td class="text-center">
+                            <form method="post" action="../app/backend/procesar_borrarProducto.php"
+                              onsubmit="return confirm('¿Eliminar producto?');">
+                              <input type="hidden" name="id_producto" value="<?= $p['id'] ?>">
+                              <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </form>
+                          </td>
+                        <?php endif; ?>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>

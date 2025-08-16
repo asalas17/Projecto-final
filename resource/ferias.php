@@ -228,10 +228,22 @@ include(__DIR__ . '/../templates/footer.php');
       }
     }
   });
+
+  function initMaps() {
+    initFeriasMap();
+    <?php if ($rol === 'admin'): ?>
+      if (typeof initMap === 'function') {
+        initMap();
+      }
+    <?php endif; ?>
+  }
 </script>
 <?php if ($gmapsApiKey): ?>
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=<?= htmlspecialchars($gmapsApiKey, ENT_QUOTES) ?>&callback=initFeriasMap"
+    src="https://maps.googleapis.com/maps/api/js?key=<?= htmlspecialchars($gmapsApiKey, ENT_QUOTES) ?>&callback=initMaps&libraries=places"
     async defer></script>
+<?php endif; ?>
+<?php if ($rol === 'admin'): ?>
+  <script src="../app/js/crearFeria.js"></script>
 <?php endif; ?>
 <script src="../app/js/asistirFeria.js"></script>

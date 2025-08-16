@@ -3,6 +3,8 @@ session_start();
 $mensaje = '';
 if (isset($_GET['registro']) && $_GET['registro'] == 'ok') {
     $mensaje = 'Registro realizado con exito! Ya puedes iniciar sesion.';
+} elseif (isset($_GET['reset']) && $_GET['reset'] == 'ok') {
+    $mensaje = 'Contraseña actualizada. Ya puedes iniciar sesión.';
 } elseif (isset($_GET['error'])) {
     $mensaje = htmlspecialchars($_GET['error']);
 }
@@ -60,7 +62,7 @@ if (isset($_GET['registro']) && $_GET['registro'] == 'ok') {
                         </form>
 
                         <div class="text-center mt-4">
-                            <a href="#" class="small link-success-hover text-decoration-none">
+                            <a href="recuperarContrasena.php" class="small link-success-hover text-decoration-none">
                                 ¿Olvidaste tu contraseña?
                             </a>
                         </div>

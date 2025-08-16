@@ -10,8 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $agricultor_id = $_SESSION['user_id'] ?? null;
+$rol = $_SESSION['user_rol'] ?? '';
 if (!$agricultor_id) {
     header('Location: ../../resource/inicioSesion.php');
+    exit();
+}
+
+
+if ($rol !== 'agricultor') {
+    header('Location: ../../resource/inicio.php');
     exit();
 }
 
