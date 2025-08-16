@@ -2,7 +2,7 @@
     <div class="container px-5">
         <div class="row align-items-center">
             <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
-                <h4 class="fw-bold text-success">Agronatura</h4>
+                <img src="icon.png" alt="Agronatura" width="120">
                 <p class="mb-1 small">Conectamos comunidades con el corazón agrícola de Costa Rica.</p>
                 <p class="mb-0 small">&copy; <?php echo date("Y"); ?> Agronatura. Todos los derechos reservados.</p>
             </div>
