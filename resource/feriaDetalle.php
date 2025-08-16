@@ -6,11 +6,15 @@ include(__DIR__ . '/../templates/header.php');
 include(__DIR__ . '/../templates/nav.php');
 include(__DIR__ . '/../config/db_conn.php');
 require_once __DIR__ . '/../config/env.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 $gmapsApiKey = $_ENV['GMAPS_API_KEY'] ?? '';
+$Parsedown = new Parsedown();
 
 $feriaId = $_GET['id'] ?? null;
 $feria = null;
 $agricultores = [];
+$alreadyRegistered = false;
+
 
 if ($feriaId !== null) {
     $stmt = $connection->prepare(
@@ -29,17 +33,57 @@ if ($feriaId !== null) {
     if ($feria) {
         $stmtAgr = $connection->prepare(
             "SELECT u.id, u.nombre, u.descripcion
-    FROM ferias fa
-    INNER JOIN usuarios u ON fa.id = u.id
-    WHERE fa.id = ?"
+            FROM feria_agricultor fa
+            INNER JOIN usuarios u ON fa.agricultor_id = u.id
+            WHERE fa.feria_id = ?"
         );
         $stmtAgr->bind_param('i', $feriaId);
         $stmtAgr->execute();
         $resAgr = $stmtAgr->get_result();
         while ($row = $resAgr->fetch_assoc()) {
+            $stmtProd = $connection->prepare('SELECT nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
+            $stmtProd->bind_param('i', $row['id']);
+            $stmtProd->execute();
+            $resProd = $stmtProd->get_result();
+            $row['productos'] = [];
+            while ($prod = $resProd->fetch_assoc()) {
+                $row['productos'][] = $prod;
+            }
+            $stmtProd->close();
+
+            // Próximas ferias en las que participa
+            $row['ferias'] = [];
+            $stmtFeria = $connection->prepare(
+                "SELECT f.id, f.nombre, f.fecha_inicio
+                FROM ferias f
+                INNER JOIN feria_agricultor fa2 ON fa2.feria_id = f.id
+                WHERE fa2.agricultor_id = ? AND f.fecha_inicio >= CURDATE()
+                ORDER BY f.fecha_inicio"
+            );
+            if ($stmtFeria) {
+                $stmtFeria->bind_param('i', $row['id']);
+                if ($stmtFeria->execute()) {
+                    $resFeria = $stmtFeria->get_result();
+                    while ($f = $resFeria->fetch_assoc()) {
+                        $row['ferias'][] = $f;
+                    }
+                }
+                $stmtFeria->close();
+            }
+
             $agricultores[] = $row;
         }
         $stmtAgr->close();
+        if ($rol === 'a' && isset($_SESSION['user_id'])) {
+            $stmtCheck = $connection->prepare(
+                'SELECT 1 FROM feria_agricultor WHERE feria_id = ? AND agricultor_id = ?'
+            );
+            $stmtCheck->bind_param('ii', $feriaId, $_SESSION['user_id']);
+            $stmtCheck->execute();
+            $stmtCheck->store_result();
+            $isRegistered = $stmtCheck->num_rows > 0;
+            $stmtCheck->close();
+        }
     }
 }
 
@@ -47,6 +91,11 @@ $connection->close();
 
 ?>
 <div class="container px-4 px-lg-5">
+    <div class="mt-4 mb-3">
+        <button class="btn btn-outline-secondary" onclick="history.back()">
+            <i class="bi bi-arrow-left"></i> Ir atrás
+        </button>
+    </div>
     <?php if (!$feria): ?>
         <p class="text-center my-5">Feria no encontrada.</p>
     <?php else: ?>
@@ -76,17 +125,33 @@ $connection->close();
                 <h1 class="fw-bold text-success mb-3">
                     <i class="bi bi-shop"></i> <?= htmlspecialchars($feria['nombre']) ?>
                 </h1>
-                <p class="text-muted mb-1">
-                    <?= nl2br(htmlspecialchars($feria['descripcion'])) ?>
-                </p>
+                <div class="text-muted mb-1">
+                    <?= $Parsedown->text($feria['descripcion'] ?? '') ?>
+                </div>
                 <?php if ($provincia || $ubicacion): ?>
                     <p class="text-muted"><i class="bi bi-geo-alt"></i>
                         <?= htmlspecialchars(trim($ubicacion . ', ' . $provincia, ', ')) ?></p>
                 <?php endif; ?>
-                <?php if ($rol === 'agricultor'): ?>
+                <?php if ($lat !== null && $lng !== null):
+                    $coords = rawurlencode($lat . ',' . $lng);
+                    ?>
+                    <div class="mb-3">
+                        <a class="btn btn-outline-success btn-sm me-2" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/dir/?api=1&destination=<?= htmlspecialchars($coords, ENT_QUOTES) ?>">
+                            <i class="bi bi-geo-alt-fill"></i> Google Maps
+                        </a>
+                        <a class="btn btn-outline-success btn-sm" target="_blank" rel="noopener"
+                            href="https://waze.com/ul?ll=<?= htmlspecialchars($coords, ENT_QUOTES) ?>&navigate=yes">
+                            <i class="bi bi-signpost-split"></i> Waze
+                        </a>
+                    </div>
+                <?php endif; ?>
+                <?php if ($rol === 'a' && !$isRegistered): ?>
                     <a class="btn btn-success btn-lg" href="asistirFeria.php?id=<?= $feria['id'] ?>">
                         <i class="bi bi-pencil-square"></i> Inscribirse
                     </a>
+                <?php elseif ($rol === 'a'): ?>
+                    <p class="text-muted">Ya estás inscrito en esta feria.</p>
                 <?php endif; ?>
 
             </div>
@@ -105,29 +170,98 @@ $connection->close();
         </div>
         <div class="row gx-4 gx-lg-5">
             <?php if (count($agricultores) > 0): ?>
-                <?php foreach ($agricultores as $agricultor): ?>
+                <?php foreach ($agricultores as $a): ?>
                     <div class="col-md-4 mb-5">
                         <div class="card h-100 shadow border-0">
-                            <div class="card-body">
-                                <h5 class="card-title text-success fw-bold">
-                                    <i class="bi bi-person"></i> <?= htmlspecialchars($agricultor['nombre']) ?>
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-success fw-bold mb-0">
+                                    <i class="bi bi-person-circle"></i> <?= htmlspecialchars($a['nombre']) ?>
                                 </h5>
-                                <?php if (!empty($agricultor['descripcion'])): ?>
-                                    <p class="card-text text-muted">
-                                        <?= htmlspecialchars($agricultor['descripcion']) ?>
-                                    </p>
-                                <?php endif; ?>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 text-center">
+                                <button class="btn btn-outline-success btn-sm" data-bs-toggle="offcanvas"
+                                    data-bs-target="#agricultorModal<?= $a['id'] ?>"
+                                    aria-controls="agricultorModal<?= $a['id'] ?>">
+                                    <i class="bi bi-box-arrow-up-right"></i> Ver detalles
+                                </button>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="text-center">No hay agricultores inscritos todavía.</p>
-            <?php endif; ?>
-        </div>
-    </div>
 
-<?php endif; ?>
+                    <div class="offcanvas offcanvas-end w-25" tabindex="-1" id="agricultorModal<?= $a['id'] ?>"
+                        aria-labelledby="agricultorModalLabel<?= $a['id'] ?>">
+                        <div class="offcanvas-header">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle fs-4 me-2"></i>
+                                <h5 class="offcanvas-title mb-0" id="agricultorModalLabel<?= $a['id'] ?>">
+                                    <?= htmlspecialchars($a['nombre']) ?>
+                                </h5>
+                            </div>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <div class="mb-3">
+                                <div class="card">
+                                    <div class="card-header text-success fw-bold">
+                                        Descripción
+                                    </div>
+                                    <div class="card-body">
+                                        <?= $Parsedown->text($a['descripcion'] ?? '') ?>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="text-success">Productos</h6>
+                                    <?php if (!empty($a['productos'])): ?>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-bordered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Descripción</th>
+                                                        <th class="text-end">Precio</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($a['productos'] as $p): ?>
+                                                        <tr>
+                                                            <td><?= htmlspecialchars($p['nombre']) ?></td>
+                                                            <td><?= htmlspecialchars($p['descripcion']) ?></td>
+                                                            <td class="text-end">₡<?= htmlspecialchars($p['precio']) ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    <?php else: ?>
+                                        <p class="text-muted mb-0">Este a no ha registrado productos.</p>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="text-success">Próximas ferias</h6>
+                                    <?php if (!empty($a['ferias'])): ?>
+                                        <ul class="list-unstyled mb-0">
+                                            <?php foreach ($a['ferias'] as $f): ?>
+                                                <li class="mb-1">
+                                                    <?= htmlspecialchars($f['nombre']) ?>
+                                                    <small class="text-muted">(<?= htmlspecialchars($f['fecha_inicio']) ?>)</small>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php else: ?>
+                                        <p class="text-muted mb-0">No tiene ferias próximas registradas.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-center">No hay agricultores inscritos todavía.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    <?php endif; ?>
 
 </div>
 
@@ -137,7 +271,7 @@ $connection->close();
             const position = { lat: <?= htmlspecialchars($lat, ENT_QUOTES) ?>, lng: <?= htmlspecialchars($lng, ENT_QUOTES) ?> };
             const map = new google.maps.Map(document.getElementById('map'), {
                 center: position,
-                zoom: 15
+                zoom: 16
             });
             new google.maps.Marker({ position: position, map: map });
         }

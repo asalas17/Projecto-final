@@ -14,11 +14,13 @@ require_once __DIR__ . '/../config/auth.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
 
-    <link rel="stylesheet" href="..\app\css\navbar.css">
-    <link rel="stylesheet" href="..\app\css\inicio.css">
-    <link rel="stylesheet" href="..\app\css\feriaDetalle.css">
-    <link rel="stylesheet" href="..\app\css\footer.css">
-    <link rel="stylesheet" href="..\app\css\header.css">
+    <link rel="stylesheet" href="../app/css/navbar.css">
+    <link rel="stylesheet" href="../app/css/inicio.css">
+    <link rel="stylesheet" href="../app/css/feriaDetalle.css">
+    <link rel="stylesheet" href="../app/css/footer.css">
+    <link rel="stylesheet" href="../app/css/header.css">
+    <link rel="stylesheet" href="../app/css/cards.css">
+
 
 </head>
 

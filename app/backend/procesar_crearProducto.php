@@ -19,7 +19,7 @@ $nombre = $_POST['nombre'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
 $precio = isset($_POST['precio']) ? (float) $_POST['precio'] : 0;
 $stock = isset($_POST['stock']) ? (int) $_POST['stock'] : 0;
-$fecha_publicacion = $_POST['fecha_publicacion'] ?? date('Y-m-d H:i:s');
+$fecha_publicacion = isset($_POST['fecha_publicacion']) ? date('Y-m-d H:i:s', strtotime($_POST['fecha_publicacion'])) : date('Y-m-d H:i:s');
 $imagen_url = $_POST['imagen_url'] ?? null;
 
 if (!empty($_FILES['image_file']['name'])) {
@@ -39,6 +39,6 @@ $stmt->bind_param('issdiss', $agricultor_id, $nombre, $descripcion, $precio, $st
 $stmt->execute();
 $stmt->close();
 
-header('Location: ../../resource/inicio.php');
+header('Location: ../../resource/perfil.php');
 exit();
 ?>

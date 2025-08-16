@@ -27,11 +27,6 @@ $nombre = $_SESSION['user_name'] ?? null;
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?= ($activePage == 'inscribirse') ? 'active' : '' ?>"
-            href="inscribirse.php">Inscribirse</a>
-        </li>
-
-        <li class="nav-item">
           <a class="nav-link <?= ($activePage == 'sedes') ? 'active' : '' ?>" href="agriOficiales.php">Agricultores
             oficiales</a>
         </li>

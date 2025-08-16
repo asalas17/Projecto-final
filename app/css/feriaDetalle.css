@@ -11,3 +11,13 @@
       margin: 0;
       padding: 0;
   }
+
+  #mapaFerias {
+      --bs-offcanvas-width: 100%;
+  }
+
+  @media (min-width: 992px) {
+      #mapaFerias {
+          --bs-offcanvas-width: 25vw;
+      }
+  }
