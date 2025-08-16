@@ -9,7 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="..\app\css\registro.css">
+  <link rel="stylesheet" href="../app/css/registro.css">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
           <i class="bi bi-leaf"></i> Agronatura
         </h3>
 
-        <form id="regForm" action="..\app\backend\procesar_registro.php" method="POST">
+        <form id="regForm" action="../app/backend/procesar_registro.php" method="POST">
           <!-- Step 1: Tipo de usuario -->
           <div class="tab">
             <h5>Paso 1 de 3: ¿Quién eres?</h5>
@@ -96,7 +96,7 @@
     </div>
   </div>
 
-  <script src="..\app\js\registro.js" defer></script>
+  <script src="../app/js/registro.js" defer></script>
 
 </body>
 

@@ -6,7 +6,7 @@
                 <p class="mb-1 small">Conectamos comunidades con el corazón agrícola de Costa Rica.</p>
                 <p class="mb-0 small">&copy; <?php echo date("Y"); ?> Agronatura. Todos los derechos reservados.</p>
             </div>
-            
+
             <div class="col-md-4 mb-4 mb-md-0 text-center">
                 <h6 class="fw-bold text-uppercase">Enlaces útiles</h6>
                 <ul class="list-unstyled">
@@ -15,18 +15,22 @@
                     <li><a href="#!" class="text-white text-decoration-none link-hover">Política de privacidad</a></li>
                 </ul>
             </div>
-            
+
             <div class="col-md-4 text-center text-md-end">
                 <h6 class="fw-bold text-uppercase">Síguenos</h6>
-                <a class="text-white me-3 fs-5 link-hover" href="https://www.facebook.com" target="_blank"><i class="bi bi-facebook"></i></a>
-                <a class="text-white me-3 fs-5 link-hover" href="https://www.instagram.com" target="_blank"><i class="bi bi-instagram"></i></a>
-                <a class="text-white fs-5 link-hover" href="mailto:info@agronatura.cr"><i class="bi bi-envelope-fill"></i></a>
+                <a class="text-white me-3 fs-5 link-hover" href="https://www.facebook.com" target="_blank"><i
+                        class="bi bi-facebook"></i></a>
+                <a class="text-white me-3 fs-5 link-hover" href="https://www.instagram.com" target="_blank"><i
+                        class="bi bi-instagram"></i></a>
+                <a class="text-white fs-5 link-hover" href="mailto:info@agronatura.cr"><i
+                        class="bi bi-envelope-fill"></i></a>
                 <p class="mt-2 small">info@agronatura.cr</p>
             </div>
         </div>
     </div>
 </footer>
 
+<script src="..\app\js\cards.js"></script>
 
 </body>
 

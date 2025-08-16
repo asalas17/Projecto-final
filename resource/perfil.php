@@ -28,8 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombreProd = $_POST['nombre'] ?? '';
         $descProd = $_POST['descripcion'] ?? '';
         $precioProd = (float) ($_POST['precio'] ?? 0);
-        $stmt = $connection->prepare('UPDATE productos SET nombre = ?, descripcion = ?, precio = ? WHERE id = ? AND agricultor_id = ?');
-        $stmt->bind_param('ssdii', $nombreProd, $descProd, $precioProd, $prodId, $userId);
+        $stockProd = (int) ($_POST['stock'] ?? 0);
+        $fechaPub = isset($_POST['fecha_publicacion']) ? date('Y-m-d H:i:s', strtotime($_POST['fecha_publicacion'])) : date('Y-m-d H:i:s');
+        $imagenUrl = $_POST['imagen_url'] ?? null;
+        $stmt = $connection->prepare('UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ?, fecha_publicacion = ?, imagen_url = ? WHERE id = ? AND agricultor_id = ?');
+        $stmt->bind_param('ssdissii', $nombreProd, $descProd, $precioProd, $stockProd, $fechaPub, $imagenUrl, $prodId, $userId);
         $stmt->execute();
         $stmt->close();
     }
@@ -43,7 +46,7 @@ $stmt->fetch();
 $stmt->close();
 
 $productos = [];
-$stmt = $connection->prepare('SELECT id, nombre, descripcion, precio FROM productos WHERE agricultor_id = ?');
+$stmt = $connection->prepare('SELECT id, nombre, descripcion, precio, stock, fecha_publicacion, imagen_url FROM productos WHERE agricultor_id = ?');
 $stmt->bind_param('i', $userId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -76,7 +79,8 @@ include(__DIR__ . '/../templates/nav.php');
     <div class="card">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <span>Mis productos</span>
-            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Crear producto</button>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Crear
+                producto</button>
         </div>
         <div class="card-body">
 
@@ -115,17 +119,30 @@ include(__DIR__ . '/../templates/nav.php');
                                         <form method="post" class="row g-2">
                                             <input type="hidden" name="accion" value="actualizar_producto">
                                             <input type="hidden" name="id_producto" value="<?= $p['id'] ?>">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <input type="text" name="nombre" class="form-control"
                                                     value="<?= htmlspecialchars($p['nombre']) ?>" required>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <input type="text" name="descripcion" class="form-control"
                                                     value="<?= htmlspecialchars($p['descripcion']) ?>" required>
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="number" step="0.01" name="precio" class="form-control"
                                                     value="<?= htmlspecialchars($p['precio']) ?>" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="number" name="stock" class="form-control"
+                                                    value="<?= htmlspecialchars($p['stock']) ?>" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="datetime-local" name="fecha_publicacion" class="form-control"
+                                                    value="<?= htmlspecialchars(date('Y-m-d\TH:i', strtotime($p['fecha_publicacion']))) ?>"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="url" name="imagen_url" class="form-control"
+                                                    value="<?= htmlspecialchars($p['imagen_url']) ?>">
                                             </div>
                                             <div class="col-md-2">
                                                 <button class="btn btn-success w-100" type="submit">Actualizar</button>

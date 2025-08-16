@@ -5,11 +5,14 @@ $activePage = 'ferias';
 include(__DIR__ . '/../templates/header.php');
 include(__DIR__ . '/../templates/nav.php');
 include(__DIR__ . '/../config/db_conn.php');
+require_once __DIR__ . '/../config/env.php';
+$gmapsApiKey = $_ENV['GMAPS_API_KEY'] ?? '';
 
 $ferias = [];
 
 $sql = "SELECT f.id, f.nombre, f.descripcion, f.fecha_inicio, f.fecha_fin, f.ubicacion, f.fechaCreacion, f.fechaActualizado,
        i.image_url, i.image_path, i.alt_text FROM ferias f LEFT JOIN feria_imagen i ON i.feria_id = f.id
+       WHERE f.fecha_fin >= NOW()
        ORDER BY f.fechaCreacion DESC";
 $result = $connection->query($sql);
 
@@ -23,6 +26,20 @@ if ($result === false) {
 }
 
 $connection->close();
+$feriasCoords = [];
+foreach ($ferias as $feria) {
+  $ubicacionData = json_decode($feria['ubicacion'] ?? '', true) ?? [];
+  $lat = $ubicacionData['google_maps']['lat'] ?? null;
+  $lng = $ubicacionData['google_maps']['lng'] ?? null;
+  if ($lat !== null && $lng !== null) {
+    $feriasCoords[] = [
+      'id' => $feria['id'],
+      'nombre' => $feria['nombre'],
+      'lat' => $lat,
+      'lng' => $lng,
+    ];
+  }
+}
 ?>
 
 <style>
@@ -40,6 +57,8 @@ $connection->close();
       <h1 class="display-4 fw-bold">Próximas ferias agrícolas</h1>
       <p class="lead fw-normal text-white-50 mb-0">Encontrá los eventos más cercanos y apoyá a los productores locales
       </p>
+      <button class="btn btn-light mt-4" data-bs-toggle="offcanvas" data-bs-target="#mapaFerias"
+        aria-controls="mapaFerias">Ver mapa</button>
     </div>
   </div>
 </header>
@@ -102,7 +121,7 @@ $connection->close();
       <?php if (count($ferias) > 0): ?>
         <?php foreach ($ferias as $feria): ?>
           <div class="col mb-5">
-            <div class="card h-100 shadow border-0">
+            <div class="card h-100 shadow border-0" data-href="feriaDetalle.php?id=<?php echo $feria['id']; ?>">
               <?php
               $imgSrc = 'https://via.placeholder.com/600x400';
               if (!empty($feria['image_url'])) {
@@ -127,7 +146,7 @@ $connection->close();
                 <a class="btn btn-outline-success" href="feriaDetalle.php?id=<?= $feria['id'] ?>">Ver detalles</a>
 
                 <?php if ($rol === 'agricultor'): ?>
-                  <a class="btn btn-success ms-2" href="asistirFeria.php">Inscribirme</a>
+                  <button class="btn btn-success ms-2 inscribirmeBtn" data-feria-id="<?= $feria['id'] ?>">Inscribirme</button>
                 <?php elseif ($rol === 'admin'): ?>
                   <?php
                   $ubicacionData = json_decode($feria['ubicacion'], true) ?? [];
@@ -159,15 +178,60 @@ $connection->close();
         <?php endforeach; ?>
 
       <?php else: ?>
-        <p class="text-center">No hay ferias registradas.</p>
+        <p class="text-center">No hay ferias próximas.</p>
       <?php endif; ?>
 
     </div>
   </div>
 </section>
 
+</section>
+
+<div class="offcanvas offcanvas-end w-50" tabindex="-1" id="mapaFerias" aria-labelledby="mapaFeriasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mapaFeriasLabel">Mapa de ferias</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body p-0" style="height:100vh;">
+    <div id="feriasMap" style="height:100%; min-height:400px;"></div>
+  </div>
+</div>
+
 <?php
 include(__DIR__ . '/../templates/footer.php');
 ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const feriasCoords = <?= json_encode($feriasCoords, JSON_UNESCAPED_UNICODE) ?>;
+  let feriasMap;
+  function initFeriasMap() {
+    const defaultPos = { lat: 9.7489, lng: -83.7534 };
+    const center = feriasCoords.length > 0
+      ? { lat: parseFloat(feriasCoords[0].lat), lng: parseFloat(feriasCoords[0].lng) }
+      : defaultPos;
+    feriasMap = new google.maps.Map(document.getElementById('feriasMap'), {
+      center: center,
+      zoom: 9
+    });
+    feriasCoords.forEach(f => {
+      const pos = { lat: parseFloat(f.lat), lng: parseFloat(f.lng) };
+      const marker = new google.maps.Marker({ position: pos, map: feriasMap, title: f.nombre });
+      const info = new google.maps.InfoWindow({ content: `<strong>${f.nombre}</strong>` });
+      marker.addListener('click', () => info.open(feriasMap, marker));
+    });
+  }
+  document.getElementById('mapaFerias').addEventListener('shown.bs.offcanvas', () => {
+    if (feriasMap) {
+      google.maps.event.trigger(feriasMap, 'resize');
+      if (feriasCoords.length > 0) {
+        feriasMap.setCenter({ lat: parseFloat(feriasCoords[0].lat), lng: parseFloat(feriasCoords[0].lng) });
+      }
+    }
+  });
+</script>
+<?php if ($gmapsApiKey): ?>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=<?= htmlspecialchars($gmapsApiKey, ENT_QUOTES) ?>&callback=initFeriasMap"
+    async defer></script>
+<?php endif; ?>
+<script src="../app/js/asistirFeria.js"></script>
