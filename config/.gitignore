@@ -1,2 +1,2 @@
 # Ignore database configuration file
-db_config.php
+db_conn.php

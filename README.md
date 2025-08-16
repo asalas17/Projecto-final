@@ -1,3 +1,5 @@
+![Agronatura](Agronatura.png)
+
 # Agronatura 🌱
 
 **Plataforma Web para Ferias del Agricultor en Costa Rica**
