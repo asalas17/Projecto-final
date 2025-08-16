@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/env.php';
 session_start();
 require_once __DIR__ . '/../config/db_conn.php';
 
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param('ss', $hash, $email);
             $stmt->execute();
             $stmt->close();
-            header('Location: inicioSesion.php?reset=ok');
+            header('Location: ' . BASE_PATH . '/resource/inicioSesion.php?reset=ok');
             exit;
         }
     }
@@ -93,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <p class="text-center mt-4 text-muted small">
                         ¿Recordaste tu contraseña?
-                        <a href="inicioSesion.php" class="fw-bold link-success-hover text-decoration-none">Inicia sesión aquí</a>
+                        <a href="<?= BASE_PATH ?>/resource/inicioSesion.php" class="fw-bold link-success-hover text-decoration-none">Inicia sesión aquí</a>
                     </p>
                 </div>
             </div>

@@ -1,9 +1,10 @@
 <?php
 
+require_once __DIR__ . '/../../config/env.php';
 require_once __DIR__ . '/../../config/db_conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../../resource/registro.php');
+    header('Location: ' . BASE_PATH . '/resource/registro.php');
     exit;
 }
 
@@ -77,7 +78,7 @@ if (!empty($errors)) {
             <?php endforeach; ?>
           </ul>
           <hr>
-          <a href="/../../resource/registro.php" class="btn btn-secondary">Volver al formulario</a>
+          <a href="<?= BASE_PATH ?>/resource/registro.php" class="btn btn-secondary">Volver al formulario</a>
         </div>
       </div>
     </body>
@@ -107,7 +108,7 @@ $stmt->bind_param(
 
 if ($stmt->execute()) {
     // Registro exitoso: redirigir al login (o donde tú prefieras)
-    header("Location: /../../resource/inicioSesion.php?registro=ok");
+    header('Location: ' . BASE_PATH . '/resource/inicioSesion.php?registro=ok');
     exit;
 } else {
     // Error en la inserción
@@ -125,7 +126,7 @@ if ($stmt->execute()) {
           <h4 class="alert-heading">Error al guardar datos:</h4>
           <p><?= htmlspecialchars($stmt->error) ?></p>
           <hr>
-          <a href="registro.php" class="btn btn-secondary">Intentar de nuevo</a>
+          <a href="<?= BASE_PATH ?>/resource/registro.php" class="btn btn-secondary">Intentar de nuevo</a>
         </div>
       </div>
     </body>

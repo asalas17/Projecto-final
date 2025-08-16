@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../config/env.php';
 require_once '../../config/db_conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
@@ -31,6 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 }
 
 $connection->close();
-header('Location: ../../resource/ferias.php');
+header('Location: ' . BASE_PATH . '/resource/ferias.php');
 exit();
 ?>
