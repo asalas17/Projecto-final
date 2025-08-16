@@ -8,8 +8,10 @@ include(__DIR__ . '/../templates/nav.php');
 <header class="bg-success py-5 text-white agronaturaHeader position-relative" style="height: 500px;">
   <div class="container px-4 px-lg-5 my-4 text-center position-relative" style="z-index: 2;">
     <h1 class="display-4 fw-bold">Acerca de Nosotros</h1>
-    <p class="lead text-white-50 mb-0">Conectamos comunidades con el corazón agrícola de Costa Rica</p>
-  </div>
+<p class="lead mb-0" style="color: rgba(255,255,255,0.9);">
+      Conectamos comunidades con el corazón agrícola de Costa Rica
+    </p>
+    </div>
 
 <!-- Agregando img al header -->
   <img src="/Projecto-final/img/farmers.jpg" alt=""
