@@ -96,7 +96,7 @@ foreach ($ferias as $feria) {
 
 <!-- Buscador -->
 <div class="container mt-5">
-  <h2 class="mb-4 text-center text-success fw-bold">Buscador por provincia</h2>
+  <h2 class="mb-4 text-center text-success fw-bold">Buscador con filtros</h2>
 
   <form class="row g-3 justify-content-center" method="get">
     <!-- Input de búsqueda -->

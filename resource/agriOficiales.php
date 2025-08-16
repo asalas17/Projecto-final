@@ -93,7 +93,7 @@ $connection->close();
 <!-- Buscador -->
 <div class="container my-5">
   <h2 class="mb-4 text-center text-success fw-bold">
-    <i class="bi bi-search"></i> Buscador por provincia
+    <i class="bi bi-search"></i> Buscador
   </h2>
 
   <form class="row g-3 justify-content-center" method="get">
