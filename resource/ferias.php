@@ -58,7 +58,7 @@ foreach ($ferias as $feria) {
       <p class="lead fw-normal text-white-50 mb-0">Encontrá los eventos más cercanos y apoyá a los productores locales
       </p>
       <button class="btn btn-light mt-4" data-bs-toggle="offcanvas" data-bs-target="#mapaFerias"
-        aria-controls="mapaFerias">Ver mapa</button>
+        aria-controls="mapaFerias">Ver mapa de ferias</button>
     </div>
   </div>
 </header>

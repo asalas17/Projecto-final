@@ -106,27 +106,51 @@ if ($result) {
         </div>
       </div>
 
-      <div class="offcanvas offcanvas-end w-50" tabindex="-1" id="agricultorModal<?= $a['id'] ?>"
+      <div class="offcanvas offcanvas-end w-25" tabindex="-1" id="agricultorModal<?= $a['id'] ?>"
         aria-labelledby="agricultorModalLabel<?= $a['id'] ?>">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="agricultorModalLabel<?= $a['id'] ?>">
-            <?= htmlspecialchars($a['nombre']) ?>
-          </h5>
+          <div class="d-flex align-items-center">
+            <i class="bi bi-person-circle fs-4 me-2"></i>
+            <h5 class="offcanvas-title mb-0" id="agricultorModalLabel<?= $a['id'] ?>">
+              <?= htmlspecialchars($a['nombre']) ?>
+            </h5>
+          </div>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <div class="mb-3"> <?= $Parsedown->text($a['descripcion'] ?? '') ?>
+          <div class="mb-3">
+            <div class="card">
+              <div class="card-header text-success fw-bold">
+                Descripción
+              </div>
+              <div class="card-body">
+                <?= $Parsedown->text($a['descripcion'] ?? '') ?>
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <h6 class="text-success">Productos</h6>
             <?php if (!empty($a['productos'])): ?>
-              <ul class="list-unstyled mb-0">
-                <?php foreach ($a['productos'] as $p): ?>
-                  <li class="mb-1"><strong><?= htmlspecialchars($p['nombre']) ?></strong> -
-                    <?= htmlspecialchars($p['descripcion']) ?>
-                  </li>
-                <?php endforeach; ?>
-              </ul>
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered mb-0">
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th class="text-end">Precio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($a['productos'] as $p): ?>
+                      <tr>
+                        <td><?= htmlspecialchars($p['nombre']) ?></td>
+                        <td><?= htmlspecialchars($p['descripcion']) ?></td>
+                        <td class="text-end">₡<?= htmlspecialchars($p['precio']) ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
             <?php else: ?>
               <p class="text-muted mb-0">Este agricultor no ha registrado productos.</p>
             <?php endif; ?>
