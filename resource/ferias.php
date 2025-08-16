@@ -10,11 +10,41 @@ $gmapsApiKey = $_ENV['GMAPS_API_KEY'] ?? '';
 
 $ferias = [];
 
+// Parámetros de búsqueda
+$query = trim($_GET['query'] ?? '');
+$provinciaIn = trim($_GET['provincia'] ?? '');
+
+
 $sql = "SELECT f.id, f.nombre, f.descripcion, f.fecha_inicio, f.fecha_fin, f.ubicacion, f.fechaCreacion, f.fechaActualizado,
        i.image_url, i.image_path, i.alt_text FROM ferias f LEFT JOIN feria_imagen i ON i.feria_id = f.id
-       WHERE f.fecha_fin >= NOW()
-       ORDER BY f.fechaCreacion DESC";
-$result = $connection->query($sql);
+        WHERE f.fecha_fin >= NOW()";
+
+$params = [];
+$types = '';
+
+if ($query !== '') {
+  $sql .= " AND (f.nombre LIKE ? OR f.descripcion LIKE ? OR JSON_UNQUOTE(JSON_EXTRACT(f.ubicacion, '$.ubicacion')) LIKE ?)";
+  $like = "%{$query}%";
+  $params[] = $like;
+  $params[] = $like;
+  $params[] = $like;
+  $types .= 'sss';
+}
+
+if ($provinciaIn !== '') {
+  $sql .= " AND JSON_UNQUOTE(JSON_EXTRACT(f.ubicacion, '$.provincia')) = ?";
+  $params[] = $provinciaIn;
+  $types .= 's';
+}
+
+$sql .= " ORDER BY f.fechaCreacion DESC";
+
+$stmt = $connection->prepare($sql);
+if (!empty($params)) {
+  $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result === false) {
   error_log("Database query failed: " . $connection->error);
@@ -25,6 +55,7 @@ if ($result === false) {
   $result->free();
 }
 
+$stmt->close();
 $connection->close();
 $feriasCoords = [];
 foreach ($ferias as $feria) {
@@ -67,24 +98,24 @@ foreach ($ferias as $feria) {
 <div class="container mt-5">
   <h2 class="mb-4 text-center text-success fw-bold">Buscador por provincia</h2>
 
-  <form class="row g-3 justify-content-center">
+  <form class="row g-3 justify-content-center" method="get">
     <!-- Input de búsqueda -->
     <div class="col-md-5">
       <input type="text" class="form-control border-success" placeholder="Buscar por nombre, lugar, fecha, etc."
-        name="query">
+        name="query" value="<?= htmlspecialchars($query) ?>">
     </div>
 
     <!-- Dropdown de provincia -->
     <div class="col-md-3">
       <select class="form-select border-success" name="provincia">
-        <option selected disabled>Seleccionar provincia</option>
-        <option value="San José">San José</option>
-        <option value="Alajuela">Alajuela</option>
-        <option value="Cartago">Cartago</option>
-        <option value="Heredia">Heredia</option>
-        <option value="Guanacaste">Guanacaste</option>
-        <option value="Puntarenas">Puntarenas</option>
-        <option value="Limón">Limón</option>
+        <option value="" <?= $provinciaIn === '' ? 'selected' : '' ?> disabled>Seleccionar provincia</option>
+        <option value="San José" <?= $provinciaIn === 'San José' ? 'selected' : '' ?>>San José</option>
+        <option value="Alajuela" <?= $provinciaIn === 'Alajuela' ? 'selected' : '' ?>>Alajuela</option>
+        <option value="Cartago" <?= $provinciaIn === 'Cartago' ? 'selected' : '' ?>>Cartago</option>
+        <option value="Heredia" <?= $provinciaIn === 'Heredia' ? 'selected' : '' ?>>Heredia</option>
+        <option value="Guanacaste" <?= $provinciaIn === 'Guanacaste' ? 'selected' : '' ?>>Guanacaste</option>
+        <option value="Puntarenas" <?= $provinciaIn === 'Puntarenas' ? 'selected' : '' ?>>Puntarenas</option>
+        <option value="Limón" <?= $provinciaIn === 'Limón' ? 'selected' : '' ?>>Limón</option>
       </select>
     </div>
 
@@ -94,6 +125,10 @@ foreach ($ferias as $feria) {
     </div>
 
 
+    <!-- Reset -->
+    <div class="col-md-2">
+      <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" class="btn btn-outline-secondary w-100">Limpiar</a>
+    </div>
 
   </form>
 

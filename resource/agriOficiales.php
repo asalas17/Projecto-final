@@ -11,7 +11,42 @@ include(__DIR__ . '/../templates/nav.php');
 $isAdmin = ($_SESSION['user_rol'] ?? '') === 'admin';
 
 $agricultores = [];
-$result = $connection->query("SELECT id, nombre, descripcion FROM usuarios WHERE rol = 'agricultor' ORDER BY nombre");
+// Parámetros de búsqueda
+$query = trim($_GET['query'] ?? '');
+$provinciaIn = trim($_GET['provincia'] ?? '');
+
+$sql = "SELECT DISTINCT u.id, u.nombre, u.descripcion, u.ubicacion
+        FROM usuarios u
+        LEFT JOIN productos p ON p.agricultor_id = u.id
+        WHERE u.rol = 'agricultor'";
+
+$params = [];
+$types = '';
+
+if ($query !== '') {
+  $sql .= " AND (u.nombre LIKE ? OR u.descripcion LIKE ? OR p.nombre LIKE ? OR p.descripcion LIKE ?)";
+  $like = "%{$query}%";
+  $params[] = $like;
+  $params[] = $like;
+  $params[] = $like;
+  $params[] = $like;
+  $types .= 'ssss';
+}
+
+if ($provinciaIn !== '') {
+  $sql .= " AND u.ubicacion LIKE ?";
+  $params[] = "%{$provinciaIn}%";
+  $types .= 's';
+}
+
+$sql .= " ORDER BY u.nombre";
+
+$stmt = $connection->prepare($sql);
+if (!empty($params)) {
+  $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
 if ($result) {
   while ($row = $result->fetch_assoc()) {
     // Obtener productos del agricultor
@@ -42,6 +77,8 @@ if ($result) {
     $agricultores[] = $row;
   }
 }
+$stmt->close();
+$connection->close();
 ?>
 <!-- Header -->
 <header class="bg-success py-5 text-white agronaturaHeader">
@@ -59,32 +96,22 @@ if ($result) {
     <i class="bi bi-search"></i> Buscador por provincia
   </h2>
 
-  <form class="row g-3 justify-content-center">
+  <form class="row g-3 justify-content-center" method="get">
     <!-- Input de búsqueda -->
     <div class="col-md-5">
       <input type="text" class="form-control border-success" placeholder="Buscar producto, servicio, productor..."
-        name="query">
+        name="query" value="<?= htmlspecialchars($query) ?>">
     </div>
-
-    <!-- Dropdown de provincia -->
-    <div class="col-md-3">
-      <select class="form-select border-success" name="provincia">
-        <option selected disabled>Seleccionar provincia</option>
-        <option value="San José">San José</option>
-        <option value="Alajuela">Alajuela</option>
-        <option value="Cartago">Cartago</option>
-        <option value="Heredia">Heredia</option>
-        <option value="Guanacaste">Guanacaste</option>
-        <option value="Puntarenas">Puntarenas</option>
-        <option value="Limón">Limón</option>
-      </select>
-    </div>
-
     <!-- Botón -->
     <div class="col-md-2">
       <button type="submit" class="btn btn-success w-100">
         <i class="bi bi-search"></i> Buscar
       </button>
+    </div>
+
+    <!-- Reset -->
+    <div class="col-md-2">
+      <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" class="btn btn-outline-secondary w-100">Limpiar</a>
     </div>
   </form>
 </div>
